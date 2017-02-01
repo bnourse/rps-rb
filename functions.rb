@@ -2,70 +2,120 @@
 
 class RPS
 	def init
-		@p1_wins = 0
-		@p2_wins = 0
-		@ties = 0
+		@winner = ""
+		@play_to_score = 3
+		@p1 = Player.new
+		@p1.init
+		@p1.set_name("Player 1")
+		@p2 = Player.new
+		@p2.init
+		@p2.set_name("Player 2")
+	end
+
+	def set_play_to_score(score)
+		@play_to_score = score
 	end
 
 	def start_game
+		round_number = 0;
+		while [@p1.score,@p2.score].max < @play_to_score
+			round_number += 1
+			puts "Round #{round_number}... FIGHT!"
+			r = Round.new
+			r.play_round(@p1,@p2)	
+		end
+		puts "Game over. The winner is: #{current_winner.name}!"
+	end
 
+	def current_winner
+		winner = nil
+		if @p1.score > @p2.score
+			winner = @p1
+		elsif @p2.score > @p1.score
+			winner = @p2
+		end
+		return winner
 	end
 end
 
 class Round
-	def init
-		@p1_choice = ""
-		@p2_choice = ""
+
+	def play_round(player1, player2)
+		@p1 = player1
+		@p2 = player2
+		pick_choices
+		winner = find_winner(@p1_choice, @p2_choice)
+		if !winner = nil then winner.won_round end
 	end
 
-	def play_round
-
-
+	def pick_choices
+		@p1_choice = @p1.pick_choice
+		@p2_choice = @p2.pick_choice	
 	end
 
-	def get_choice
-
-	end
-
-	def get_valid_choice
-
+	def find_winner
+		winner = nil
+		case @p1_choice
+		when "rock"
+			if @p2_choice == "paper" then winner = @p2 end
+			elsif @p2_choice == "scissors" then winner = @p1 end
+		when "paper"
+			if @p2_choice == "paper" then winner = @p2 end
+			elsif @p2_choice == "scissors" then winner = @p1 end
+		when "scissors"
+			if @p2_choice == "paper" then winner = @p2 end
+			elsif @p2_choice == "scissors" then winner = @p1 end
+		end
+		return winner
 	end
 end
 
 class Player
 	def init
 		@choice = Choice.new
+		@player_name = ""
 		@score = 0
-		@name = ""
 	end
 
 	def choice
-		@choice
+		@choice.weapon
 	end
 
 	def set_name(name)
-		@name = name
+		@player_name = name
 	end
 
-	def get_choice
-		@choice.pick_weapon
-		return @choice
+	def pick_choice
+		@choice.pick_weapon(@player_name)
+		return @choice.weapon
 	end
+
+	def won_round
+		@score += 1
+	end
+
+	def score
+		@score
+	end
+
+	def name
+		@player_name
+	end
+
 end
 
 class Choice
-
 	def valid(input)
-		input = input.downcase 
 		valid_choices = ["rock","paper","scissors"]
 		return valid_choices.include? input
 	end
 
-	def pick_weapon
+	def pick_weapon(player_name)
 		@weapon = ""
 		while !valid(@weapon)
-			print "please pick rock, paper, or scissors: "
-			@weapon = gets.chomp
+			print "#{player_name} please pick rock, paper, or scissors: "
+			@weapon = gets.chomp.downcase
+			if @weapon == "lizard" then puts "Hi Sumeet." end
 			if !valid(@weapon) then puts "Invalid choice." end
 		end
 	end
@@ -74,4 +124,5 @@ class Choice
 		@weapon
 	end
 end
+
 
