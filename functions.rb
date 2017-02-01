@@ -1,4 +1,4 @@
-
+require 'pry'
 
 class RPS
 	def init
@@ -21,20 +21,22 @@ class RPS
 		while [@p1.score,@p2.score].max < @play_to_score
 			round_number += 1
 			puts "Round #{round_number}... FIGHT!"
+			show_current_scores
 			r = Round.new
-			r.play_round(@p1,@p2)	
+			r.play_round(@p1,@p2)
 		end
 		puts "Game over. The winner is: #{current_winner.name}!"
 	end
 
 	def current_winner
 		winner = nil
-		if @p1.score > @p2.score
-			winner = @p1
-		elsif @p2.score > @p1.score
-			winner = @p2
-		end
+		if @p1.score > @p2.score then winner = @p1
+		elsif @p2.score > @p1.score then winner = @p2 end
 		return winner
+	end
+
+	def show_current_scores
+		puts "#{@p1.name} score: #{@p1.score} | #{@p2.name} score: #{@p2.score}"
 	end
 end
 
@@ -44,8 +46,14 @@ class Round
 		@p1 = player1
 		@p2 = player2
 		pick_choices
-		winner = find_winner(@p1_choice, @p2_choice)
-		if !winner = nil then winner.won_round end
+		winner = find_winner
+		if winner != nil
+			winner.won_round
+			puts "#{winner.name} wins the round."
+		else
+			puts "Round is a tie."
+		end
+		return winner
 	end
 
 	def pick_choices
@@ -57,14 +65,14 @@ class Round
 		winner = nil
 		case @p1_choice
 		when "rock"
-			if @p2_choice == "paper" then winner = @p2 end
+			if @p2_choice == "paper" then winner = @p2
 			elsif @p2_choice == "scissors" then winner = @p1 end
 		when "paper"
-			if @p2_choice == "paper" then winner = @p2 end
-			elsif @p2_choice == "scissors" then winner = @p1 end
+			if @p2_choice == "scissors" then winner = @p2
+			elsif @p2_choice == "rock" then winner = @p1 end
 		when "scissors"
-			if @p2_choice == "paper" then winner = @p2 end
-			elsif @p2_choice == "scissors" then winner = @p1 end
+			if @p2_choice == "rock" then winner = @p2
+			elsif @p2_choice == "paper" then winner = @p1 end
 		end
 		return winner
 	end
