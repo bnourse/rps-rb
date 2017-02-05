@@ -12,7 +12,17 @@
 <p><%= @game.p2.name %> score: <%= @game.p2.score %></p>
 
 <form action="/play_round" method="post">
-	<p>Player 1 choose rock, paper, or scissors: <input type="text" name = "p1choice"></p>
-	<p>Player 2 choose rock, paper, or scissors: <input type="text" name = "p2choice"></p>
+	<p>Player 1 choose rock, paper, or scissors: 
+		<input type="radio" name = "p1choice" value="rock">Rock
+		<input type="radio" name = "p1choice" value="paper">Paper
+		<input type="radio" name = "p1choice" value="scissors">Scissors
+	</p>
+
+	<p>Player 2 choose rock, paper, or scissors: 
+		<input type="radio" name = "p2choice" value="rock">Rock
+		<input type="radio" name = "p2choice" value="paper">Paper
+		<input type="radio" name = "p2choice" value="scissors">Scissors
+	</p>
+
 	<input type="submit">
 </form>
