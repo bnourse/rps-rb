@@ -1,0 +1,5 @@
+<h1>Game Over! <%= @game.current_winner.name %> wins!</h1>
+
+<form action="/new_game" method="post">
+	<button type="submit">New Game</button>
+</form>

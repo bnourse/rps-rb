@@ -1,0 +1,18 @@
+<% if @game.round_number > 1 %>
+	<% if @game.round_winner != nil %>
+		<h1><%= @game.round_winner.name %> wins the round!</h1>
+	<% else %>
+		<h1>Tie Round </h1>
+	<% end %>
+<% end %>
+
+<h1>Round <%= @game.round_number %>... Fight!</h1>
+
+<p><%= @game.p1.name %> score: <%= @game.p1.score %></p>
+<p><%= @game.p2.name %> score: <%= @game.p2.score %></p>
+
+<form action="/play_round" method="post">
+	<p>Player 1 choose rock, paper, or scissors: <input type="text" name = "p1choice"></p>
+	<p>Player 2 choose rock, paper, or scissors: <input type="text" name = "p2choice"></p>
+	<input type="submit">
+</form>
