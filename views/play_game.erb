@@ -1,3 +1,4 @@
+
 <% if @game.round_number > 1 %>
 	<% if @game.round_winner != nil %>
 		<h1><%= @game.round_winner.name %> wins the round!</h1>
@@ -8,8 +9,16 @@
 
 <h1>Round <%= @game.round_number %>... Fight!</h1>
 
-<p><%= @game.p1.name %> score: <%= @game.p1.score %></p>
-<p><%= @game.p2.name %> score: <%= @game.p2.score %></p>
+<table>
+	<thead>
+		<th><%= @game.p1.name %> score:</th>
+		<th><%= @game.p2.name %> score:</th>
+	</thead>
+	<tbody>
+		<td><%= @game.p1.score %></td>
+		<td><%= @game.p2.score %></td>
+	</tbody>
+</table>
 
 <form action="/play_round" method="post">
 	<p>Player 1 choose rock, paper, or scissors: 
