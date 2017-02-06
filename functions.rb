@@ -17,7 +17,7 @@ class RPS
 		@play_to_score = score
 	end
 
-	def start_gameß
+	def start_game
 		while [@p1.score,@p2.score].max < @play_to_score	
 			puts "Round #{@round_number}... FIGHT!"
 			show_current_scores
@@ -92,6 +92,14 @@ class Round
 		if @winner != nil then @winner.won_round end
 	end
 
+	def test_find_winner(player1, player2)
+		@p1 = player1
+		@p2 = player2
+		@p1_choice = player1.choice.weapon
+		@p2_choice = player2.choice.weapon
+		return find_winner
+	end
+
 	def pick_choices
 		@p1_choice = @p1.pick_choice
 		@p2_choice = @p2.pick_choice	
@@ -141,6 +149,10 @@ class Player
 
 	def score
 		@score
+	end
+
+	def set_score(new_score)
+		@score = new_score
 	end
 
 	def name
