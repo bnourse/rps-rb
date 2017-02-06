@@ -22,7 +22,7 @@ def test_find_winner
 		p1.set_weapon(weapon1)
 		for weapon2 in weapons
 			p2.set_weapon(weapon2)
-			actual.push(r.test_find_winner(p1,p2))
+			actual.push(r.test_find_winner(p1,p2))		
 		end
 	end
 	test_equality(expected,actual)
